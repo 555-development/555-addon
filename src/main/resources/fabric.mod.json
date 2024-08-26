@@ -1,0 +1,28 @@
+{
+  "schemaVersion": 1,
+  "id": "fivefivefive-addon",
+  "version": "1.20.1",
+  "name": "555 addon",
+  "description": "the 555 addon",
+  "authors": [
+    "CapyKing10"
+  ],
+  "contact": {
+    "repo": "https://github.com/MeteorDevelopment/meteor-addon-template"
+  },
+  "icon": "assets/template/icon.png",
+  "environment": "client",
+  "entrypoints": {
+    "meteor": [
+      "org.capy.fivefivefive.fivefivefive"
+    ]
+  },
+  "custom": {
+    "meteor-client:color": "225,25,25"
+  },
+  "depends": {
+    "java": ">=17",
+    "minecraft": ["1.20.1","${mc_version}"],
+    "meteor-client": "*"
+  }
+}
