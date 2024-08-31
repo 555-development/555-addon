@@ -1,13 +1,12 @@
 plugins {
     id "fabric-loom" version "1.6-SNAPSHOT"
-    id 'java'
 }
 
-base {
-    archivesBaseName = project.archives_base_name
-    version = project.mod_version
-    group = project.maven_group
-}
+sourceCompatibility = targetCompatibility = JavaVersion.VERSION_17
+
+archivesBaseName = project.archives_base_name
+version = project.mod_version
+group = project.maven_group
 
 repositories {
     maven {
@@ -18,10 +17,6 @@ repositories {
         name = "Meteor Dev Snapshots"
         url = "https://maven.meteordev.org/snapshots"
     }
-    maven {
-        url 'https://jitpack.io'
-    }
-    mavenCentral()
 }
 
 dependencies {
@@ -32,33 +27,16 @@ dependencies {
 
     // Meteor
     modImplementation "meteordevelopment:meteor-client:${project.meteor_version}"
+
+    implementation 'org.jsoup:jsoup:1.16.1'
 }
 
-tasks {
-    processResources {
-        def propertyMap = [
-            "version"   : project.version,
-            "mc_version": project.minecraft_version,
-        ]
-
-        filesMatching("fabric.mod.json") {
-            expand(propertyMap)
-        }
+processResources {
+    filesMatching("fabric.mod.json") {
+        expand "version": project.version, "mc_version": project.minecraft_version
     }
+}
 
-    jar {
-        from("LICENSE") {
-            rename { "${it}_${project.base.archivesBaseName}" }
-        }
-    }
-
-    java {
-        sourceCompatibility = JavaVersion.VERSION_17
-        targetCompatibility = JavaVersion.VERSION_17
-    }
-
-    tasks.withType(JavaCompile).configureEach {
-        it.options.encoding = "UTF-8"
-        it.options.release = 21
-    }
+tasks.withType(JavaCompile).configureEach {
+    it.options.encoding("UTF-8")
 }
